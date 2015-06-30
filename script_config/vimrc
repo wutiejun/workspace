@@ -1,0 +1,306 @@
+"
+"===============================================================================
+"==========  appearance option  ================================================
+"===============================================================================
+"
+syntax on
+set number
+set nocompatible
+filetype indent on
+set mouse=a
+set background=dark
+set showmatch
+set ruler
+set magic
+set showcmd
+set so=7
+set tags=tags;
+colorscheme murphy
+"
+"===============================================================================
+"==========  indent option  ====================================================
+"===============================================================================
+"
+set cindent
+set autoindent
+set smartindent
+"
+"===============================================================================
+"==========  tab option  =======================================================
+"===============================================================================
+"
+set expandtab
+set smarttab
+set lbr
+set tw=500
+set tabstop=4
+set shiftwidth=4
+set vb t_vb=
+"
+"===============================================================================
+"==========  search option  ====================================================
+"===============================================================================
+"
+set incsearch
+set ignorecase
+set hlsearch
+"set wiw=20 
+let Tlist_File_Fold_Auto_Close = 1
+"let Tlist_Compact_Format = 1
+"let Tlist_Display_Prototype = 1
+let Tlist_Exit_OnlyWindow = 1
+let Tlist_GainFocus_On_ToggleOpen = 1
+let Tlist_Inc_Winwidth = 0
+let Tlist_Show_One_File = 1
+let Tlist_Sort_Type = "order"
+let Tlist_WinWidth=35
+let Tlist_Use_Right_Window = 1
+let Tlist_Use_SingleClick = 1
+let g:winManagerWindowLayout = 'FileExplorer,TagsExplorer|BufExplorer'
+let g:persistentBehaviour = 0
+let g:winManagerWidth = 20
+"map <c-w><c-t> :WMToggle<cr> 
+"map <c-w><c-f> :FirstExplorerWindow<cr>
+"map <c-w><c-b> :BottomExplorerWindow<cr>
+"
+"===============================================================================
+"==========  load .vimrc  ======================================================
+"===============================================================================
+"
+"Fast reloading of the .vimrc
+map <leader>s :source ~/.vimrc<cr>
+""Fast editing of .vimrc
+map <leader>e :e! ~/.vimrc<cr>
+"When .vimrc is edited, reload it
+autocmd! bufwritepost vimrc source ~/.vimrc"
+"
+"===============================================================================
+"==========  Turn backup off  ==================================================
+"===============================================================================
+"
+"set nobackup
+set backupdir=~/vimdir/
+set nowritebackup
+set nowb
+set noswapfile
+"
+"===============================================================================
+"==========  Enable folding  ===================================================
+"===============================================================================
+"
+set nofen
+set fdl=0
+set foldmethod=syntax
+"
+"===============================================================================
+"==========  load example vimrc from the distribution  =========================
+"===============================================================================
+"
+runtime vimrc_example.vim
+filetype plugin on
+"
+"===============================================================================
+"==========  CUSTOMIZATION (vimrc)  ============================================
+"===============================================================================
+"
+" Platform specific items:
+" - central backup directory (has to be created)
+" - default dictionary
+" Uncomment your choice.  
+if  has("win16") || has("win32")     || has("win64") || 
+  \ has("win95") || has("win32unix")
+    "
+"    runtime mswin.vim
+"    set backupdir =$VIM\vimfiles\backupdir
+"    set dictionary=$VIM\vimfiles\wordlists/german.list
+else
+"    set backupdir =$HOME/.vim.backupdir
+"    set dictionary=$HOME/.vim/wordlists/german.list
+endif
+"
+" Using a backupdir under UNIX/Linux: you may want to include a line similar to
+"   find  $HOME/.vim.backupdir -name "*" -type f -mtime +60 -exec rm -f {} \;
+" in one of your shell startup files (e.g. $HOME/.profile)
+"
+"-------------------------------------------------------------------------------
+" Use of dictionaries
+"-------------------------------------------------------------------------------
+"
+set complete+=k           " scan the files given with the 'dictionary' option
+"
+"-------------------------------------------------------------------------------
+" Various settings
+"-------------------------------------------------------------------------------
+"
+set autoread              " read open files again when changed outside Vim
+set autowrite             " write a modified buffer on each :next , ...
+set browsedir =current   " which directory to use for the file browser
+"set nowrap                " do not wrap lines
+"set shiftwidth =2         " number of spaces to use for each step of indent
+"set tabstop    =2         " number of spaces that a <Tab> in the file counts for
+"set visualbell            " visual bell instead of beeping
+"
+"
+"-------------------------------------------------------------------------------
+"  some additional hot keys
+"-------------------------------------------------------------------------------
+"    F2   -  write file without confirmation
+"    F3   -  call file explorer Ex
+"    F4   -  show tag under curser in the preview window (tagfile must exist!)
+"    F5   -  open quickfix error window
+"    F6   -  close quickfix error window
+"    F7   -  display previous error
+"    F8   -  display next error   
+"  S-Tab  -  Fast switching between buffers (see below)
+"    C-q  -  Leave the editor with Ctrl-q (see below)
+"-------------------------------------------------------------------------------
+"
+map   <silent> <F2>    :write<CR>
+map   <silent> <F3>    :Explore<CR>
+"nmap  <silent> <F4>    :exe ":ptag ".expand("<cword>")<CR>
+"map   <silent> <F5>    :copen<CR>
+"map   <silent> <F6>    :cclose<CR>
+"map   <silent> <F7>    :cp<CR>
+"map   <silent> <F8>    :cn<CR>
+"
+imap  <silent> <F2>    <Esc>:write<CR>
+imap  <silent> <F3>    <Esc>:Explore<CR>
+"imap  <silent> <F4>    <Esc>:exe ":ptag ".expand("<cword>")<CR>
+"imap  <silent> <F5>    <Esc>:copen<CR>
+"imap  <silent> <F6>    <Esc>:cclose<CR>
+"imap  <silent> <F7>    <Esc>:cp<CR>
+"imap  <silent> <F8>    <Esc>:cn<CR>
+"
+"-------------------------------------------------------------------------------
+" Fast switching between buffers
+" The current buffer will be saved before switching to the next one.
+" Choose :bprevious or :bnext
+"-------------------------------------------------------------------------------
+"
+ map  <silent> <F4>  <Esc>:if &modifiable && !&readonly && 
+     \                  &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
+imap  <silent> <F4>  <Esc>:if &modifiable && !&readonly && 
+     \                  &modified <CR> :write<CR> :endif<CR>:bprevious<CR>
+"
+"-------------------------------------------------------------------------------
+" Leave the editor with Ctrl-q : Write all changed buffers and exit Vim
+"-------------------------------------------------------------------------------
+"nmap  <C-q>    :wqa<CR>
+"
+"-------------------------------------------------------------------------------
+" autocomplete parenthesis, brackets and braces
+"-------------------------------------------------------------------------------
+inoremap ( ()<Left>
+inoremap [ []<Left>
+inoremap { {}<Left>
+inoremap " ""<Left>
+"
+vnoremap ( s()<Esc>P<Right>%
+vnoremap [ s[]<Esc>P<Right>%
+vnoremap { s{}<Esc>P<Right>%
+vnoremap " s""<Esc>P<Right>%
+"
+"-------------------------------------------------------------------------------
+" Change the working directory to the directory containing the current file
+"-------------------------------------------------------------------------------
+if has("autocmd")
+  autocmd BufEnter * :lchdir %:p:h
+endif " has("autocmd")
+"
+"-------------------------------------------------------------------------------
+" Filename completion
+" 
+"   wildmenu : command-line completion operates in an enhanced mode
+" wildignore : A file that matches with one of these
+"              patterns is ignored when completing file or directory names.
+"-------------------------------------------------------------------------------
+" 
+set wildmenu
+set wildignore=*.bak,*.o,*.e,*~
+"
+"-------------------------------------------------------------------------------
+" print options  (pc = percentage of the media size)
+"-------------------------------------------------------------------------------
+set printoptions=left:8pc,right:3pc
+"                         
+"-------------------------------------------------------------------------------
+" taglist.vim : toggle the taglist window
+" taglist.vim : define the title texts for make
+" taglist.vim : define the title texts for qmake
+"-------------------------------------------------------------------------------
+ noremap <silent> <F8>  <Esc><Esc>:Tlist<CR>
+inoremap <silent> <F8>  <Esc><Esc>:Tlist<CR>
+ noremap <silent> <F4>  <Esc><Esc>:WMToggle<CR>
+inoremap <silent> <F4>  <Esc><Esc>:WMToggle<CR>
+
+let tlist_make_settings  = 'make;m:makros;t:targets'
+
+let tlist_qmake_settings = 'qmake;t:SystemVariables'
+
+if has("autocmd")
+  " ----------  qmake : set filetype for *.pro  ----------
+  autocmd BufNewFile,BufRead *.pro  set filetype=qmake
+endif " has("autocmd")
+
+let c_gnu = 1
+let c_syntax_for_h = 1
+"let c_comment_strings = 1
+"let c_comment_numbers = 1	
+"let c_comment_types = 1	
+"let c_comment_date_time	= 1
+"let c_no_comment_fold = 1
+"let c_warn_nested_comments = 1
+"let c_warn_8bitchar = 1	
+"let c_char_is_integer = 1
+let c_ansi_typedefs = 1	
+let c_ansi_constants = 1	
+"let c_impl_defined = 1	
+let c_posix	= 1	
+"let c_math = 1	
+let c_C99 = 1
+let c_C99_warn = 1
+"let c_cpp_warn = 1
+"let c_conditional_is_operator = 1
+"let c_minlines = 1	
+"let c_warn_8bitchars = 1
+"let c_warn_multichar = 1
+"let c_warn_digraph = 1
+"let c_warn_trigraph = 1
+let c_no_if0 = 1
+"let c_C94 = 1
+"let c_C99_warn = 1
+"let c_cpp_warn = 1
+let c_warn_8bitchars = 1
+let c_warn_multichar = 1
+let c_warn_digraph = 1
+let c_warn_trigraph = 1
+"let c_no_octal = 1
+
+"syn keyword	    cBooltype	    BOOL
+"syn cluster	    cTypedef	    add=cBooltype
+"syn keyword	    cBoolvalues	    TRUE FALSE
+"syn cluster	    cBoolean	    add=cBoolvalues
+"
+"syn keyword	    cTag	    ...
+"syn cluster	    cParenContents  add=cTag
+"syn cluster	    cDefineContents add=cTag
+"syn cluster	    cConditionalContents add=cTag
+"hi link         cTag	    Tag
+"syn match	    cRCSField	    contained "\$\u.*\$"
+"syn cluster	    cCommentGroup   add=cRCSField
+"hi link	    cRCSField  	    PreProc
+"syn match	    cRCSField	    contained "\$\u.*\$" contains=cDate,cTime
+"syn cluster	    cStringContents add=cRCSField
+
+let &termencoding=&encoding
+set fileencodings=utf-8,gbk,ucs-bom,cp936
+
+" .F8...........taglist...,.vc....workpace
+nnoremap <silent> <F8> :TlistToggle<CR><CR>
+
+" :Tlist              ..TagList
+let Tlist_Show_One_File=0                    " ........tags
+let Tlist_Exit_OnlyWindow=1                  " ..Taglist............Vim
+let Tlist_Use_Right_Window=1                 " ........
+let Tlist_File_Fold_Auto_Close=1             " ....
+
